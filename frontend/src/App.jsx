@@ -11,6 +11,7 @@ import {
   ProductScreen,
   RegisterScreen,
   ShippingScreen,
+  ProfileScreen,
 } from "./screens";
 // Components
 import { Footer, Header, PrivateRoute } from "./components";
@@ -34,6 +35,7 @@ const App = () => {
           <Route path="/payment" element={<PaymentScreen />} />
           <Route path="/placeorder" element={<PlaceOrderScreen />} />
           <Route path="/order/:id" element={<OrderScreen />} />
+          <Route path="/profile" element={<ProfileScreen />} />
         </Route>
       </Routes>
       <Footer />

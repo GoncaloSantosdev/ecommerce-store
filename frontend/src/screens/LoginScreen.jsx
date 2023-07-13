@@ -45,7 +45,7 @@ const LoginScreen = () => {
   return (
     <section>
       <div className="container mx-auto px-6 mt-12 flex flex-col items-center">
-        <div className="w-full  rounded-lg shadow border md:mt-0 sm:max-w-md xl:p-0 bg-slate-900 border-gray-700">
+        <div className="w-full rounded-lg shadow border md:mt-0 sm:max-w-md xl:p-0 bg-slate-900 border-gray-700">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
             <h1 className="text-xl font-bold leading-tight tracking-tight md:text-2xl text-white">
               Login in your account
