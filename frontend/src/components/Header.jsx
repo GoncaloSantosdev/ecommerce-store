@@ -90,8 +90,8 @@ const Header = () => {
 
             {userInfo && userInfo.isAdmin && (
               <div>
-                <Link to={"admin/productslist"}>Products</Link>
-                <Link to={"admin/userslist"}>Users</Link>
+                <Link to={"admin/productlist"}>Products</Link>
+                <Link to={"admin/userlist"}>Users</Link>
                 <Link to={"admin/orderlist"}>Orders</Link>
               </div>
             )}

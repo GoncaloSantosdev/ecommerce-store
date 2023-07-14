@@ -1,9 +1,10 @@
+// React Router
+import { Link } from "react-router-dom";
 // Redux
 import { useGetOrdersQuery } from "../../redux/slices/ordersApiSlice";
 // Components
 import { Message, Spinner } from "../../components";
 import { FaTimes } from "react-icons/fa";
-import { Link } from "react-router-dom";
 
 const OrderListScreen = () => {
   const { data: orders, isLoading, error } = useGetOrdersQuery();
@@ -45,42 +46,40 @@ const OrderListScreen = () => {
               </thead>
               <tbody>
                 {orders.map((order) => (
-                  <>
-                    <tr className="bg-slate-900">
-                      <th
-                        scope="row"
-                        className="px-6 py-4 font-medium text-white whitespace-nowrap"
-                      >
-                        {order._id}
-                      </th>
-                      <td className="px-6 py-4">
-                        {order.user && order.user.name}
-                      </td>
-                      <td className="px-6 py-4">
-                        {order.createdAt.substring(0, 10)}
-                      </td>
-                      <td className="px-6 py-4">${order.totalPrice}</td>
-                      <td className="px-6 py-4">
-                        {order.isPaid ? (
-                          order.paidAt.substring(0, 10)
-                        ) : (
-                          <FaTimes className="text-red-500" />
-                        )}
-                      </td>
-                      <td className="px-6 py-4">
-                        {order.delivered ? (
-                          order.deliveredAt.substring(0, 10)
-                        ) : (
-                          <FaTimes className="text-red-500" />
-                        )}
-                      </td>
-                      <td className="px-6 py-4">
-                        <Link to={`/order/${order._id}`} className="underline">
-                          Details
-                        </Link>
-                      </td>
-                    </tr>
-                  </>
+                  <tr className="bg-slate-900" key={order._id}>
+                    <th
+                      scope="row"
+                      className="px-6 py-4 font-medium text-white whitespace-nowrap"
+                    >
+                      {order._id}
+                    </th>
+                    <td className="px-6 py-4">
+                      {order.user && order.user.name}
+                    </td>
+                    <td className="px-6 py-4">
+                      {order.createdAt.substring(0, 10)}
+                    </td>
+                    <td className="px-6 py-4">${order.totalPrice}</td>
+                    <td className="px-6 py-4">
+                      {order.isPaid ? (
+                        order.paidAt.substring(0, 10)
+                      ) : (
+                        <FaTimes className="text-red-500" />
+                      )}
+                    </td>
+                    <td className="px-6 py-4">
+                      {order.delivered ? (
+                        order.deliveredAt.substring(0, 10)
+                      ) : (
+                        <FaTimes className="text-red-500" />
+                      )}
+                    </td>
+                    <td className="px-6 py-4">
+                      <Link to={`/order/${order._id}`} className="underline">
+                        Details
+                      </Link>
+                    </td>
+                  </tr>
                 ))}
               </tbody>
             </table>
