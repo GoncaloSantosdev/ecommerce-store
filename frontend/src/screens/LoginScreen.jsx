@@ -56,7 +56,7 @@ const LoginScreen = () => {
                   htmlFor="email"
                   className="block mb-2 text-sm font-medium  text-white"
                 >
-                  Your email
+                  Your email - (admin@email.com)
                 </label>
                 <input
                   type="email"
@@ -73,7 +73,7 @@ const LoginScreen = () => {
                   htmlFor="password"
                   className="block mb-2 text-sm font-medium  text-white"
                 >
-                  Password
+                  Password - (123456)
                 </label>
                 <input
                   type="password"

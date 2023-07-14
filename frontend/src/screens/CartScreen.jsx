@@ -127,17 +127,6 @@ const CartScreen = () => {
                   )}
                 </p>
               </div>
-              <div className="flex justify-between">
-                <p className="text-gray-700">Shipping</p>
-                <p className="text-gray-700">$4.99</p>
-              </div>
-              <hr className="my-4" />
-              <div className="flex justify-between">
-                <p className="text-lg font-bold">Total</p>
-                <div className="">
-                  <p className="mb-1 text-lg font-bold">$134.98 USD</p>
-                </div>
-              </div>
               <button
                 type="button"
                 className="btn-primary w-full mt-4"
