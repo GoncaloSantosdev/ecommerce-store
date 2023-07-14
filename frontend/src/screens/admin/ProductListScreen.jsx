@@ -1,5 +1,5 @@
 // React Router
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 // Redux
 import {
   useGetProductsQuery,
@@ -13,14 +13,19 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 import { toast } from "react-toastify";
 
 const ProductListScreen = () => {
-  const { data: products, isLoading, error, refetch } = useGetProductsQuery();
-  const [createProduct, { isLoading: loadingCreate }] =
-    useCreateProductMutation();
+  const { pageNumber } = useParams();
 
-  const createProductHandler = async () => {
-    if (window.confirm("Are you sure you want to create a new product?")) {
+  const { data, isLoading, error, refetch } = useGetProductsQuery({
+    pageNumber,
+  });
+
+  const [deleteProduct, { isLoading: loadingDelete }] =
+    useDeleteProductMutation();
+
+  const deleteHandler = async (id) => {
+    if (window.confirm("Are you sure")) {
       try {
-        await createProduct();
+        await deleteProduct(id);
         refetch();
       } catch (err) {
         toast.error(err?.data?.message || err.error);
@@ -28,14 +33,13 @@ const ProductListScreen = () => {
     }
   };
 
-  const [deleteProduct, { isLoading: loadingDelete }] =
-    useDeleteProductMutation();
+  const [createProduct, { isLoading: loadingCreate }] =
+    useCreateProductMutation();
 
-  const deleteHandler = async (id) => {
-    if (window.confirm("Are you sure?")) {
+  const createProductHandler = async () => {
+    if (window.confirm("Are you sure you want to create a new product?")) {
       try {
-        await deleteProduct(id);
-        toast.success("Product Deleted");
+        await createProduct();
         refetch();
       } catch (err) {
         toast.error(err?.data?.message || err.error);
@@ -84,7 +88,7 @@ const ProductListScreen = () => {
                 </tr>
               </thead>
               <tbody>
-                {products.map((product) => (
+                {data.products.map((product) => (
                   <tr className="bg-slate-900" key={product._id}>
                     <th
                       scope="row"

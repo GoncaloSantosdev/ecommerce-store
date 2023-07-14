@@ -1,14 +1,17 @@
 // React Router
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 // Redux
 import { useGetProductsQuery } from "../redux/slices/productsApiSlice";
 // Components
 import { Message, ProductCard, Spinner, Paginate } from "../components";
 
 const HomeScreen = () => {
-  const { pageNumber } = useParams();
+  const { pageNumber, keyword } = useParams();
 
-  const { data, isLoading, error } = useGetProductsQuery({ pageNumber });
+  const { data, isLoading, error } = useGetProductsQuery({
+    keyword,
+    pageNumber,
+  });
 
   return (
     <section>
@@ -16,6 +19,14 @@ const HomeScreen = () => {
         <h2 className="text-center text-2xl md:text-3xl md:text-left">
           Our <span className="text-blue-700">Featured</span> Products
         </h2>
+
+        <div className="mt-6">
+          {keyword && (
+            <Link to={"/"} className="btn-primary">
+              Go Back
+            </Link>
+          )}
+        </div>
 
         {isLoading ? (
           <Spinner />
@@ -32,7 +43,11 @@ const HomeScreen = () => {
                 </div>
               ))}
             </div>
-            <Paginate pages={data.pages} page={data.page} />
+            <Paginate
+              pages={data.pages}
+              page={data.page}
+              keyword={keyword ? keyword : ""}
+            />
           </>
         )}
       </div>
