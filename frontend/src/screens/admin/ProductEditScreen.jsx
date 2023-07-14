@@ -72,6 +72,7 @@ const ProductEditScreen = () => {
       navigate("/admin/productlist");
     }
   };
+
   const uploadFileHandler = async (e) => {
     const formData = new FormData();
     formData.append("image", e.target.files[0]);
