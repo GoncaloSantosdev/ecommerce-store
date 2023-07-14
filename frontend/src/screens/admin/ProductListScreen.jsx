@@ -1,13 +1,32 @@
+/* eslint-disable no-unused-vars */
 // React Router
 import { Link } from "react-router-dom";
 // Redux
-import { useGetProductsQuery } from "../../redux/slices/productsApiSlice";
+import {
+  useGetProductsQuery,
+  useCreateProductMutation,
+} from "../../redux/slices/productsApiSlice";
 // Components
 import { Message, Spinner } from "../../components";
-import { FaTimes, FaEdit, FaTrash } from "react-icons/fa";
+import { FaEdit, FaTrash } from "react-icons/fa";
+// Toastify
+import { toast } from "react-toastify";
 
 const ProductListScreen = () => {
-  const { data: products, isLoading, error } = useGetProductsQuery();
+  const { data: products, isLoading, error, refetch } = useGetProductsQuery();
+  const [createProduct, { isLoading: loadingCreate }] =
+    useCreateProductMutation();
+
+  const createProductHandler = async () => {
+    if (window.confirm("Are you sure you want to create a new product?")) {
+      try {
+        await createProduct();
+        refetch();
+      } catch (err) {
+        toast.error(err?.data?.message || err.error);
+      }
+    }
+  };
 
   const deleteHandler = (id) => {};
 
@@ -16,8 +35,12 @@ const ProductListScreen = () => {
       <div className="container mx-auto px-6 mt-12">
         <div className="flex justify-between items-center">
           <h2 className="text-left text-xl">Products</h2>
-          <button className="btn-primary">Create Product</button>
+          <button className="btn-primary" onClick={createProductHandler}>
+            Create Product
+          </button>
         </div>
+
+        {loadingCreate && <Spinner />}
 
         {isLoading ? (
           <Spinner />
