@@ -1,10 +1,14 @@
+// React Router
+import { useParams } from "react-router-dom";
 // Redux
 import { useGetProductsQuery } from "../redux/slices/productsApiSlice";
 // Components
-import { Message, ProductCard, Spinner } from "../components";
+import { Message, ProductCard, Spinner, Paginate } from "../components";
 
 const HomeScreen = () => {
-  const { data: products, isLoading, error } = useGetProductsQuery();
+  const { pageNumber } = useParams();
+
+  const { data, isLoading, error } = useGetProductsQuery({ pageNumber });
 
   return (
     <section>
@@ -22,12 +26,13 @@ const HomeScreen = () => {
         ) : (
           <>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
-              {products.map((product) => (
+              {data.products.map((product) => (
                 <div key={product._id} className="flex justify-center">
                   <ProductCard product={product} />
                 </div>
               ))}
             </div>
+            <Paginate pages={data.pages} page={data.page} />
           </>
         )}
       </div>

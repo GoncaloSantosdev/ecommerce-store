@@ -7,3 +7,4 @@ export { default as Footer } from "./Footer";
 export { default as CheckoutSteps } from "./CheckoutSteps";
 export { default as PrivateRoute } from "./PrivateRoute";
 export { default as AdminRoute } from "./AdminRoute";
+export { default as Paginate } from "./Paginate";

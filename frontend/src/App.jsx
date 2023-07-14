@@ -30,6 +30,7 @@ const App = () => {
       <Header />
       <Routes>
         <Route path="/" element={<HomeScreen />} />
+        <Route path="/page/:pageNumber" element={<HomeScreen />} />
         <Route path="/product/:id" element={<ProductScreen />} />
         <Route path="/cart" element={<CartScreen />} />
         <Route path="/login" element={<LoginScreen />} />
