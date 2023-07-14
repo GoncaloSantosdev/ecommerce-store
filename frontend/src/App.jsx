@@ -14,6 +14,7 @@ import {
   ProfileScreen,
   OrderListScreen,
   ProductListScreen,
+  ProductEditScreen,
 } from "./screens";
 // Components
 import { Footer, Header, PrivateRoute, AdminRoute } from "./components";
@@ -43,6 +44,10 @@ const App = () => {
         <Route path="" element={<AdminRoute />}>
           <Route path="/admin/orderlist" element={<OrderListScreen />} />
           <Route path="/admin/productlist" element={<ProductListScreen />} />
+          <Route
+            path="/admin/product/:id/edit"
+            element={<ProductEditScreen />}
+          />
         </Route>
       </Routes>
       <Footer />

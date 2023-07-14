@@ -83,7 +83,7 @@ const ProductListScreen = () => {
                     <td className="px-6 py-4">{product.category}</td>
                     <td className="px-6 py-4">{product.brand}</td>
                     <td className="px-6 py-4 flex space-x-8">
-                      <Link to={`admin/product/${product._id}/edit`}>
+                      <Link to={`/admin/product/${product._id}/edit`}>
                         <FaEdit className="text-yellow-500" />
                       </Link>
                       <button onClick={() => deleteHandler(product._id)}>
