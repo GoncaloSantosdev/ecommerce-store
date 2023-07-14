@@ -18,7 +18,6 @@ import {
 
 const Header = () => {
   const [menu, setMenu] = useState(false);
-  const [dropdown, setDropdown] = useState(false);
   const { cartItems } = useSelector((state) => state.cart);
   const { userInfo } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
@@ -62,7 +61,7 @@ const Header = () => {
               : "hidden md:flex md:space-x-6"
           }
         >
-          <div className="flex items-center space-x-2" onClick={closeMenu}>
+          <div className="flex items-center" onClick={closeMenu}>
             <AiOutlineShoppingCart />
             <Link to={"/cart"}>Cart</Link>
             {cartItems.length > 0 && (
@@ -87,6 +86,14 @@ const Header = () => {
                 <AiOutlineLogin />
                 <Link to={"/login"}>Login</Link>
               </>
+            )}
+
+            {userInfo && userInfo.isAdmin && (
+              <div>
+                <Link to={"admin/productslist"}>Products</Link>
+                <Link to={"admin/userslist"}>Users</Link>
+                <Link to={"admin/orderlist"}>Orders</Link>
+              </div>
             )}
           </div>
         </div>

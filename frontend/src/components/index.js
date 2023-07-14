@@ -4,5 +4,6 @@ export { default as Rating } from "./Rating";
 export { default as Spinner } from "./Spinner";
 export { default as Message } from "./Message";
 export { default as Footer } from "./Footer";
-export { default as PrivateRoute } from "./PrivateRoute";
 export { default as CheckoutSteps } from "./CheckoutSteps";
+export { default as PrivateRoute } from "./PrivateRoute";
+export { default as AdminRoute } from "./AdminRoute";

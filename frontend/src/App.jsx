@@ -12,9 +12,10 @@ import {
   RegisterScreen,
   ShippingScreen,
   ProfileScreen,
+  OrderListScreen,
 } from "./screens";
 // Components
-import { Footer, Header, PrivateRoute } from "./components";
+import { Footer, Header, PrivateRoute, AdminRoute } from "./components";
 // Toastify
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -36,6 +37,10 @@ const App = () => {
           <Route path="/placeorder" element={<PlaceOrderScreen />} />
           <Route path="/order/:id" element={<OrderScreen />} />
           <Route path="/profile" element={<ProfileScreen />} />
+        </Route>
+
+        <Route path="" element={<AdminRoute />}>
+          <Route path="/admin/orderlist" element={<OrderListScreen />} />
         </Route>
       </Routes>
       <Footer />

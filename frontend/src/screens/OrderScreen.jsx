@@ -10,6 +10,7 @@ import {
   useGetOrderDetailsQuery,
   usePayOrderMutation,
   useGetPaypalClientIdQuery,
+  useDeliverOrderMutation,
 } from "../redux/slices/ordersApiSlice";
 // Paypal
 import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
@@ -28,8 +29,8 @@ const OrderScreen = () => {
 
   const [payOrder, { isLoading: loadingPay }] = usePayOrderMutation();
 
-  // const [deliverOrder, { isLoading: loadingDeliver }] =
-  //   useDeliverOrderMutation();
+  const [deliverOrder, { isLoading: loadingDeliver }] =
+    useDeliverOrderMutation();
 
   const { userInfo } = useSelector((state) => state.auth);
 
@@ -72,14 +73,6 @@ const OrderScreen = () => {
     });
   }
 
-  // Testing
-  // async function onApproveTest() {
-  //   await payOrder({ orderId, details: { payer: {} } });
-  //   refetch();
-
-  //   toast.success("Order is paid");
-  // }
-
   function onError(err) {
     toast.error(err.message);
   }
@@ -98,10 +91,15 @@ const OrderScreen = () => {
       });
   }
 
-  // const deliverHandler = async () => {
-  //   await deliverOrder(orderId);
-  //   refetch();
-  // };
+  const deliverHandler = async () => {
+    try {
+      await deliverOrder(orderId);
+      refetch();
+      toast.success("Order Delivered");
+    } catch (err) {
+      toast.error(err?.data?.message || err.message);
+    }
+  };
 
   return (
     <section>
@@ -141,7 +139,7 @@ const OrderScreen = () => {
                   <p className="mt-4">
                     <span className="font-semibold"></span>{" "}
                     {order.isDelivered ? (
-                      <p>Delivered on {order.deliveredAt}</p>
+                      <Message>Delivered on {order.deliveredAt}</Message>
                     ) : (
                       <Message variant="danger">Not Delivered</Message>
                     )}
@@ -227,12 +225,6 @@ const OrderScreen = () => {
                         <Spinner />
                       ) : (
                         <div>
-                          {/* <button
-                            className="btn-primary"
-                            onClick={onApproveTest}
-                          >
-                            Pay Order
-                          </button> */}
                           <PayPalButtons
                             createOrder={createOrder}
                             onApprove={onApprove}
@@ -243,7 +235,18 @@ const OrderScreen = () => {
                     </div>
                   )}
                 </div>
-                {/* Mark as delivered */}
+                {loadingDeliver && <Spinner />}
+
+                {userInfo &&
+                  userInfo.isAdmin &&
+                  order.isPaid &&
+                  !order.isDelivered && (
+                    <div>
+                      <button className="btn-primary" onClick={deliverHandler}>
+                        Mark as delivered
+                      </button>
+                    </div>
+                  )}
               </div>
             </div>
           </div>

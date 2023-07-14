@@ -30,9 +30,9 @@ const ProductCard = ({ product }) => {
           <span className="text-2xl font-bold text-white">
             ${product.price}
           </span>
-          <button type="button" className="btn-primary">
-            Add to cart
-          </button>
+          <Link to={`/product/${product._id}`} className="btn-primary">
+            View More
+          </Link>
         </div>
       </div>
     </div>
