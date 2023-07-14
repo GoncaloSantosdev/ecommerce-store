@@ -6,6 +6,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   useUpdateProductMutation,
   useGetProductDetailsQuery,
+  useUploadProductImageMutation,
 } from "../../redux/slices/productsApiSlice";
 // Components
 import { Message, Spinner } from "../../components";
@@ -33,6 +34,9 @@ const ProductEditScreen = () => {
 
   const [updateProduct, { isLoading: loadingUpdate }] =
     useUpdateProductMutation();
+
+  const [uploadProductImage, { isLoading: loadingUpload }] =
+    useUploadProductImageMutation();
 
   useEffect(() => {
     if (product) {
@@ -66,6 +70,17 @@ const ProductEditScreen = () => {
     } else {
       toast.success("Product Updated");
       navigate("/admin/productlist");
+    }
+  };
+  const uploadFileHandler = async (e) => {
+    const formData = new FormData();
+    formData.append("image", e.target.files[0]);
+    try {
+      const res = await uploadProductImage(formData).unwrap();
+      toast.success(res.message);
+      setImage(res.image);
+    } catch (err) {
+      toast.error(err?.data?.message || err.error);
     }
   };
 
@@ -110,7 +125,7 @@ const ProductEditScreen = () => {
                   <div>
                     <label
                       htmlFor="price"
-                      className="block mb-2 text-sm font-medium  text-white"
+                      className="block mb-2 text-sm font-medium text-white"
                     >
                       Price
                     </label>
@@ -122,21 +137,36 @@ const ProductEditScreen = () => {
                       className=" border sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
                     />
                   </div>
-                  {/* <div>
+                  <div className="mb-4">
                     <label
-                      htmlFor="price"
-                      className="block mb-2 text-sm font-medium  text-white"
+                      htmlFor="image"
+                      className="block mb-2 text-sm font-medium text-white"
                     >
                       Image
                     </label>
                     <input
+                      id="image"
                       type="text"
-                      name="price"
-                      value={price}
-                      onChange={(e) => setPrice(e.target.value)}
-                      className=" border sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="Enter image URL"
+                      value={image}
+                      onChange={(e) => setImage(e.target.value)}
+                      className="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 block w-full p-2 rounded-md"
                     />
-                  </div> */}
+                    <input
+                      id="file"
+                      onChange={uploadFileHandler}
+                      type="file"
+                      className="opacity-0 absolute z-10 w-full"
+                    />
+                    <label
+                      htmlFor="file"
+                      className="cursor-pointer bg-white border-gray-300 hover:bg-gray-100 py-2 px-4 mt-2 inline-flex items-center rounded-md"
+                    >
+                      Choose File
+                    </label>
+                    {loadingUpload && <Spinner />}
+                  </div>
+
                   <div>
                     <label
                       htmlFor="brand"
