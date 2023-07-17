@@ -7,7 +7,7 @@ import {
   useDeleteProductMutation,
 } from "../../redux/slices/productsApiSlice";
 // Components
-import { Message, Spinner } from "../../components";
+import { Message, Spinner, Paginate } from "../../components";
 import { FaEdit, FaTrash } from "react-icons/fa";
 // Toastify
 import { toast } from "react-toastify";
@@ -112,6 +112,7 @@ const ProductListScreen = () => {
                 ))}
               </tbody>
             </table>
+            <Paginate pages={data.pages} page={data.page} isAdmin={true} />
           </div>
         )}
       </div>
